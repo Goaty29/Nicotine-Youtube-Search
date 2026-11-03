@@ -1,5 +1,7 @@
 # YouTube Search plugin for Nicotine++
 
+> **Unofficial.** This plugin is not made or endorsed by the Nicotine+ developers. It was made with the help of [Claude](https://claude.ai), an AI assistant by Anthropic.
+
 Adds **Search on YouTube** to the right-click menu of files when you browse a user's shares. It guesses the artist and title from the file name and opens a YouTube search in your browser.
 
 Tested with Nicotine+ 3.3.7 and 3.3.11.
