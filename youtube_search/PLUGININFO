@@ -1,0 +1,4 @@
+Version = "1.1.0"
+Authors = ["Goaty29"]
+Name = "YouTube Search"
+Description = "Adds 'Search on YouTube' to the right-click menu of files when browsing a user's shares. Guesses artist and title from the file name. Also adds a /yt command."
