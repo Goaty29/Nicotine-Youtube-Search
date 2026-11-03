@@ -43,7 +43,7 @@ It removes the extension, track numbers, dates, anything in [square brackets], a
 
 ## Caveat
 
-Nicotine+ has no official way for plugins to add file menu items, so this plugin hooks into the browse tab's internal code. A future Nicotine+ release could break it. If that happens, the `/yt` command will still work.
+Nicotine++ has no official way for plugins to add file menu items, so this plugin hooks into the browse tab's internal code. A future Nicotine+ release could break it. If that happens, the `/yt` command will still work.
 
 ## License
 
