@@ -1,4 +1,4 @@
-# YouTube Search plugin for Nicotine+
+# YouTube Search plugin for Nicotine++
 
 Adds **Search on YouTube** to the right-click menu of files when you browse a user's shares. It guesses the artist and title from the file name and opens a YouTube search in your browser.
 
