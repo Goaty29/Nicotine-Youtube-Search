@@ -6,6 +6,12 @@ All notable changes to this plugin are listed here. The format is based on
 
 ## [Unreleased]
 
+### Changed
+
+- Website addresses that download sites add to file names are left out of the
+  search, for example `Junglewood - Passistas (Original Mix) www.electronicfresh.com.mp3`
+  or `... heydj.pro.mp3`. Your files are not renamed.
+
 ## [1.2.0] - 2026-11-04
 
 ### Added
