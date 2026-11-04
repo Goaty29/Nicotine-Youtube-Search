@@ -30,6 +30,12 @@ TRAILING_TAGS = re.compile(
     r"(?:[\s._-]+(?:\d{2,3}\s?kbps|320|256|192|128|v[02]|flac|mp3|aac|alac|cbr|vbr|lossless|"
     r"\d{2}[\s-]?bit|\d{2,3}(?:[.,]\d)?\s?khz|(?:16|24)-(?:44|48|88|96|192)|webrip|cdrip))+$",
     re.IGNORECASE)
+# Website addresses that download sites add to names: "www.electronicfresh.com", "heydj.pro".
+# A bare name.tld only counts for common site endings, so "will.i.am" and "Mr. Nunez" stay.
+WEBSITE = re.compile(
+    r"(?<![^\s(\[{_-])(?:www\.[\w-]+(?:\.[\w-]+)+|[\w-]+(?:\.[\w-]+)*\.(?:com|net|org|info|biz|pro|"
+    r"ru|io|fm|cc|ws|su|tk|xyz|top|club|online|site|eu|de|uk|pl|hu|nl|ua|dj|mobi))(?![\w.-])",
+    re.IGNORECASE)
 # Featured artist credits: "feat. X", "ft X", "featuring X", in or out of parentheses
 FEAT = re.compile(r"\s*[(\[]?\s*\b(?:feat\.?|ft\.|ft\b|featuring)\s+[^()\[\]]*[)\]]?", re.IGNORECASE)
 DATE = re.compile(r"^\d{4}(?:[-.]\d{2}(?:[-.]\d{2})?)?$")             # 2025, 2025-07, 2025-07-23
@@ -53,6 +59,7 @@ def clean(text):
 
 
 def strip_junk(text):
+    text = WEBSITE.sub("", text)
     text = PAREN_JUNK.sub("", SQUARE.sub("", text))
     return re.sub(r"\(\s*\)", "", text)
 

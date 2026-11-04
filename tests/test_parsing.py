@@ -78,6 +78,21 @@ CASES = [
     ("Music/Daft Punk/Homework/05 - Around the World.mp3", "Daft Punk", "Around the World"),
     # File name already has the artist: don't take another one from the folders
     (r"Music\VA - Summer Hits\05 - Daft Punk - Around the World.mp3", "Daft Punk", "Around the World"),
+    # Website addresses added by download sites
+    ("Junglewood - Passistas (Original Mix) www.electronicfresh.com.mp3", "Junglewood", "Passistas (Original Mix)"),
+    ("Benan - Just Be (Original Mix)  www.electronicfresh.com.mp3", "Benan", "Just Be (Original Mix)"),
+    ("Gustaff, Franklyn Watts - Burning (Original Mix)  www.electronicfresh.com.mp3", "Gustaff, Franklyn Watts",
+     "Burning (Original Mix)"),
+    ("Daft Punk - Around the World heydj.pro.mp3", "Daft Punk", "Around the World"),
+    ("Daft Punk - Around the World - www.mp3-site.net.mp3", "Daft Punk", "Around the World"),
+    ("Daft Punk - Around the World (www.Site.ORG).mp3", "Daft Punk", "Around the World"),
+    ("www.zippymp3.ru - Daft Punk - Around the World.mp3", "Daft Punk", "Around the World"),
+    (r"Music\Daft Punk - Homework www.site.com\05 Around the World.mp3", "Daft Punk", "Around the World"),
+    ("Junglewood - Passistas (Original Mix).mp3", "Junglewood", "Passistas (Original Mix)"),
+    # Dots that are not websites
+    ("will.i.am - Scream & Shout.mp3", "will.i.am", "Scream & Shout"),
+    ("Mr. Nunez - DAMN! (Original Mix).mp3", "Mr. Nunez", "DAMN! (Original Mix)"),
+    ("Dr. Dre - Still D.R.E.mp3", "Dr. Dre", "Still D.R.E"),
     # Plain text from the /yt command
     ("daft punk around the world", "", "daft punk around the world"),
 ]
