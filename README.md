@@ -10,7 +10,7 @@ Tested with Nicotine+ 3.3.7 and 3.3.11.
 
 ## Install on Windows
 
-1. Download `youtube_search.zip` from the [latest release](../../releases/latest) and unzip it.
+1. Download `youtube_search-release.zip` from the [latest release](../../releases/latest) and unzip it.
 2. Close Nicotine+.
 3. Press Win+R, type `%AppData%\nicotine`, and press Enter.
 4. If there is no `plugins` folder there, create one.
