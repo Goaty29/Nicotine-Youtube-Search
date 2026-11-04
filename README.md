@@ -39,9 +39,15 @@ Same steps, but the plugins folder is `~/.local/share/nicotine/plugins` on Linux
 | `2025-07-23 - No Chasa - Shall We Do It Again [ADC024].mp3` | No Chasa Shall We Do It Again |
 | `03-the_pro-teens-spray_it_dont_say_it-uvu.mp3` | the pro teens spray it dont say it |
 | `Portishead - Glory Box (Official Video).webm` | Portishead Glory Box |
+| `Calvin Harris feat. Rihanna - This Is What You Came For 320kbps.mp3` | Calvin Harris This Is What You Came For |
+| `Daft Punk - Homework - 05 - Around the World.mp3` | Daft Punk Around the World |
 | `Radiohead\OK Computer\03 Subterranean Homesick Alien.flac` | Radiohead Subterranean Homesick Alien |
+| `Pink Floyd\The Wall\CD2\2-04 Comfortably Numb.flac` | Pink Floyd Comfortably Numb |
+| `50 Cent - In Da Club.mp3` | 50 Cent In Da Club |
 
-It removes the extension, track numbers, dates, anything in [square brackets], and noise in (parentheses) like bitrates, years and "Official Video". It turns underscores into spaces and splits on " - ". If the file name has no artist, it takes one from the folder names.
+It removes the extension, track numbers (`01`, `1-03`, `A2`, `Track 05`), dates, anything in [square brackets], noise in (parentheses) like bitrates, years and "Official Video", and quality tags at the end like `320kbps` or `FLAC`. Featured artists (`feat.`, `ft.`, `featuring`) are dropped so the search finds the main track, while remixes and versions like "(Radio Edit)" are kept. It turns underscores into spaces and splits on " - ". If the file name has no artist, it takes one from the folder names, skipping folders like `CD1`, `Music` or `Various Artists`.
+
+Soulseek only shares file names, not ID3 tags, so everything is guessed from the file and folder names.
 
 ## Caveat
 
