@@ -1,0 +1,16 @@
+name: Feature request
+description: Suggest an idea or improvement for the plugin.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like?
+      description: Describe the feature and how you would use it.
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Example
+      description: Optional. A file name, screenshot or site that shows what you mean.
