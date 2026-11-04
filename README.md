@@ -6,7 +6,7 @@ Adds YouTube, Bandcamp, Discogs and Spotify searches to the right-click menu of 
 
 Tested with Nicotine+ 3.3.7 and 3.3.11.
 
-![The Search on YouTube item in the right-click menu](menu-screenshot.png)
+![The Search on YouTube item in the right-click menu](Updated_SC.png)
 
 ## Install on Windows
 
