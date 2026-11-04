@@ -6,6 +6,26 @@ All notable changes to this plugin are listed here. The format is based on
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-11-04
+
+### Added
+
+- **Search on Bandcamp**, **Search on Discogs** and **Search on Spotify** in the
+  right-click menu.
+- **Search on YouTube** is back as its own menu item that always opens the results
+  page, next to **Open first YouTube video**.
+- A setting for each menu item to show or hide it. All are on by default.
+
+### Changed
+
+- Better artist and title guessing from file names: disc-track numbers (`1-03`,
+  `Track 05`), track numbers in the middle (`Artist - Album - 05 - Title`), quality
+  tags at the end (`320kbps`, `FLAC`, `24bit`), `feat.`/`ft.`/`featuring` credits are
+  dropped, names that start with a number (`50 Cent`, `2 Unlimited`) are kept, and the
+  artist is taken from folder names while skipping `CD1`, `Music` and `Various Artists`.
+- The "open the first video" setting is replaced by the **Open first YouTube video**
+  menu toggle. If you had turned it off, untick that menu item instead.
+
 ## [1.1.0] - 2026-11-03
 
 First public release on GitHub.
@@ -34,5 +54,6 @@ Not published on GitHub.
 - `/yt <text>` chat command.
 - A setting for the search URL, for example to use YouTube Music.
 
-[Unreleased]: https://github.com/Goaty29/nicotine-youtube-search/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/Goaty29/nicotine-youtube-search/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/Goaty29/nicotine-youtube-search/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/Goaty29/nicotine-youtube-search/releases/tag/v1.1.0
