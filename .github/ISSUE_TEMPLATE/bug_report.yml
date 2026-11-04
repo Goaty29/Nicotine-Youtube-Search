@@ -1,0 +1,67 @@
+name: Bug report
+description: Something doesn't work, or the search uses the wrong artist or title.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please fill in the fields below so the problem can be reproduced.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+      placeholder: I right-clicked a file and chose Search on YouTube, but nothing opened.
+    validations:
+      required: true
+  - type: input
+    id: file-name
+    attributes:
+      label: File name you tried
+      description: The full file name (and folder, if you can), exactly as shown in Nicotine+.
+      placeholder: Music\Daft Punk\01 - Daft Punk - One More Time [320].mp3
+    validations:
+      required: true
+  - type: input
+    id: search-text
+    attributes:
+      label: Search text the plugin used
+      description: Optional. What ended up in the YouTube search box.
+      placeholder: Daft Punk One More Time
+  - type: input
+    id: nicotine-version
+    attributes:
+      label: Nicotine+ version
+      description: Found under Help > About.
+      placeholder: "3.3.7"
+    validations:
+      required: true
+  - type: input
+    id: plugin-version
+    attributes:
+      label: Plugin version
+      description: Shown in Preferences > Plugins, or in the PLUGININFO file.
+      placeholder: "1.1.0"
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows
+        - Linux
+        - Linux (Flatpak)
+        - macOS
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: os-version
+    attributes:
+      label: OS version
+      placeholder: Windows 11 23H2, Ubuntu 24.04, macOS 15
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log output
+      description: Optional. Any lines from the Nicotine+ log pane that mention YouTube Search or an error.
+      render: text
