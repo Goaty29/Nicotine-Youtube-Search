@@ -1,4 +1,4 @@
-Version = "1.1.0"
+Version = "1.2.0"
 Authors = ["Goaty29"]
 Name = "YouTube Search"
-Description = "Adds 'Search on YouTube' to the right-click menu of files when browsing a user's shares. Guesses artist and title from the file name. Also adds a /yt command."
+Description = "Adds YouTube, Bandcamp, Discogs and Spotify searches to the right-click menu of files when browsing a user's shares. Choose which ones show up in the plugin settings. Guesses artist and title from the file name. Also adds a /yt command."

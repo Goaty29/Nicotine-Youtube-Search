@@ -100,23 +100,54 @@ def fetch_first_video(query, timeout=8, results_url=YOUTUBE_RESULTS):
     return find_first_video(html)
 
 
+# Extra search sites. Each one has a setting that shows or hides its menu item.
+# (setting key, menu label, setting description, search URL with %s for the query)
+SEARCH_SITES = [
+    ("menu_youtube_search", "Search on YouTube", "Show 'Search on YouTube' (results page)",
+     None),  # uses the YouTube search URL setting
+    ("menu_bandcamp", "Search on Bandcamp", "Show 'Search on Bandcamp'",
+     "https://bandcamp.com/search?q=%s"),
+    ("menu_discogs", "Search on Discogs", "Show 'Search on Discogs'",
+     "https://www.discogs.com/search/?q=%s&type=all"),
+    ("menu_spotify", "Search on Spotify", "Show 'Search on Spotify'",
+     "https://open.spotify.com/search/%s"),
+]
+
+
+def build_url(template, query):
+    # Query string templates ("?q=%s") use "+" for spaces. A path like Spotify's
+    # "/search/%s" needs real %20 escapes, or the "+" signs end up in the search.
+    if "?" in template.split("%s")[0]:
+        quoted = urllib.parse.quote_plus(query)
+    else:
+        quoted = urllib.parse.quote(query, safe="")
+    return template.replace("%s", quoted)
+
+
 class Plugin(BasePlugin):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.settings = {
-            "open_first_result": True,
+            "menu_youtube_first": True,
+            "menu_youtube_search": True,
+            "menu_bandcamp": True,
+            "menu_discogs": True,
+            "menu_spotify": True,
             "url_template": "https://www.youtube.com/results?search_query=%s",
         }
         self.metasettings = {
-            "open_first_result": {
-                "description": "Open the first video directly instead of the search results "
-                               "(falls back to the results page if it can't find one)",
+            "menu_youtube_first": {
+                "description": "Show 'Open first YouTube video' (opens the first video directly, "
+                               "or the results page if it can't find one)",
                 "type": "bool"},
-            "url_template": {
-                "description": "Search URL (%s = query). e.g. https://music.youtube.com/search?q=%s",
-                "type": "string"}
         }
+        for key, _label, description, _url in SEARCH_SITES:
+            self.metasettings[key] = {"description": description, "type": "bool"}
+        self.metasettings["url_template"] = {
+            "description": "YouTube search URL (%s = query). "
+                           "e.g. https://music.youtube.com/search?q=%s",
+            "type": "string"}
         self.commands = {
             "yt": {
                 "callback": self.yt_command,
@@ -127,16 +158,32 @@ class Plugin(BasePlugin):
         self._original_init = None
 
     def search_url(self, query):
-        return self.settings["url_template"].replace("%s", urllib.parse.quote_plus(query))
+        return build_url(self.settings["url_template"], query)
+
+    def menu_items(self):
+        """(label, callback taking a file path) for each item turned on in the settings."""
+        items = []
+        if self.settings["menu_youtube_first"]:
+            items.append(("Open first _YouTube video", self.open_first_video))
+        for key, label, _description, url in SEARCH_SITES:
+            if self.settings[key]:
+                template = url or self.settings["url_template"]
+                items.append((label, lambda path, t=template, name=label: self.open_site(path, t, name)))
+        return items
+
+    def open_site(self, file_path, template, name):
+        query = guess_query(file_path)
+        if query:
+            self.log("%s: %s", (name, query))
+            open_uri(build_url(template, query))
 
     def open_search(self, file_path):
+        """YouTube results page, no auto-open."""
+        self.open_site(file_path, self.settings["url_template"], "YouTube search")
+
+    def open_first_video(self, file_path):
         query = guess_query(file_path)
         if not query:
-            return
-
-        if not self.settings["open_first_result"]:
-            self.log("YouTube search: %s", query)
-            open_uri(self.search_url(query))
             return
 
         # Fetch the results page in the background so the window doesn't freeze
@@ -165,12 +212,16 @@ class Plugin(BasePlugin):
         open_uri(url)
 
     def yt_command(self, args, **_unused):
-        if args.strip():
+        if not args.strip():
+            return
+        if self.settings["menu_youtube_first"]:
+            self.open_first_video(args)
+        else:
             self.open_search(args)
 
     # GUI hook. Nicotine+ has no plugin API for file menus, so we wrap the
-    # UserBrowse tab constructor and append our own item. Applies to browse
-    # tabs opened after the plugin is enabled.
+    # UserBrowse tab constructor and append our own items. Applies to browse
+    # tabs opened after the plugin is enabled (or after the settings change).
     def loaded_notification(self):
         if "pynicotine.gtkgui" not in sys.modules:
             return  # running headless, no menus to add to
@@ -183,20 +234,26 @@ class Plugin(BasePlugin):
         def patched_init(browse, *args, **kwargs):
             original_init(browse, *args, **kwargs)
 
-            def on_youtube(*_args):
-                folder = browse.get_selected_folder_path()
-                for basename in list(browse.selected_files)[:5]:
-                    plugin.open_search(f"{folder}{basename}")
+            items = plugin.menu_items()
+            if not items:
+                return
+
+            def make_callback(open_file):
+                def callback(*_args):
+                    folder = browse.get_selected_folder_path()
+                    for basename in list(browse.selected_files)[:5]:
+                        open_file(f"{folder}{basename}")
+                return callback
 
             browse.file_popup_menu.add_items(
                 ("", None),
-                ("#" + "Search on _YouTube", on_youtube),
+                *(("#" + label, make_callback(open_file)) for label, open_file in items),
             )
 
         self._original_init = original_init
         userbrowse.UserBrowse.__init__ = patched_init
-        self.log("Right-click a file in a browse tab and choose 'Search on YouTube'. "
-                 "Close and reopen browse tabs that were already open.")
+        self.log("Right-click a file in a browse tab to search it on YouTube, Bandcamp, Discogs "
+                 "or Spotify. Close and reopen browse tabs that were already open.")
 
     def disable(self):
         if self._original_init:
